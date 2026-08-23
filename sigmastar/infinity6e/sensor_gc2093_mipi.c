@@ -1874,6 +1874,7 @@ static int pCus_SetOrien(ms_cus_sensor *handle, CUS_CAMSENSOR_ORIT orit)
 	gc2093_params *params = (gc2093_params *)handle->private_data;
 	switch(orit) {
     case CUS_ORIT_M0F0:
+      params->cur_orien = CUS_ORIT_M0F0;
       if (mirror_reg[0].data != 0x02) {
           mirror_reg[0].data = 0x83;
         // params->orient_dirty = true;
@@ -1881,6 +1882,7 @@ static int pCus_SetOrien(ms_cus_sensor *handle, CUS_CAMSENSOR_ORIT orit)
       }
       break;
     case CUS_ORIT_M1F0:
+      params->cur_orien = CUS_ORIT_M1F0;
       if (mirror_reg[0].data != 0x03) {
           mirror_reg[0].data = 0x82;
         //  params->orient_dirty = true;
@@ -1888,6 +1890,7 @@ static int pCus_SetOrien(ms_cus_sensor *handle, CUS_CAMSENSOR_ORIT orit)
       }
       break;
     case CUS_ORIT_M0F1:
+      params->cur_orien = CUS_ORIT_M0F1;
       if (mirror_reg[0].data != 0x00) {
           mirror_reg[0].data = 0x80;
         //  params->orient_dirty = true;
@@ -1895,6 +1898,7 @@ static int pCus_SetOrien(ms_cus_sensor *handle, CUS_CAMSENSOR_ORIT orit)
       }
       break;
     case CUS_ORIT_M1F1:
+      params->cur_orien = CUS_ORIT_M1F1;
       if (mirror_reg[0].data!=0x01) {
           mirror_reg[0].data = 0x81;
         //  params->orient_dirty = true;
