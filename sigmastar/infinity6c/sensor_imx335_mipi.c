@@ -129,7 +129,7 @@ SENSOR_DRV_ENTRY_IMPL_BEGIN_EX(IMX335_HDR);
 ////////////////////////////////////
 static struct {     // LINEAR
     // Modify it based on number of support resolution
-    enum {LINEAR_RES_1 = 0, LINEAR_RES_2, LINEAR_RES_3, LINEAR_RES_4, LINEAR_RES_5, LINEAR_RES_6, LINEAR_RES_END}mode;
+    enum {LINEAR_RES_1 = 0, LINEAR_RES_2, LINEAR_RES_3, LINEAR_RES_4, LINEAR_RES_5, LINEAR_RES_6, LINEAR_RES_7, LINEAR_RES_END}mode;
     // Sensor Output Image info
     struct _senout{
         s32 width, height, min_fps, max_fps;
@@ -149,6 +149,7 @@ static struct {     // LINEAR
     {LINEAR_RES_4, {2560, 1920, 3, 60}, {0, 0, 2560, 1920}, {"2560x1920@60fps"}},
     {LINEAR_RES_5, {2208, 1248, 3, 90}, {0, 0, 2208, 1248}, {"2208x1248@90fps"}},
     {LINEAR_RES_6, {1920, 1080, 3, 120}, {0, 0, 1920, 1080}, {"1920x1080@120fps"}},
+    {LINEAR_RES_7, {2560, 1440, 3, 60}, {0, 0, 2560, 1440}, {"2560x1440@60fps"}},
     
 };
 
@@ -404,6 +405,19 @@ const static I2C_ARRAY Sensor_init_table_2lane_5m25fps[] =
     {0x3794,0x7A},
     {0x3796,0xA1},
     {0x3A01,0x01},  //LANEMODE 0x03:4Lane  0x01:2Lane
+    // Readout window at its power-on values, written so a mode never
+    // inherits the window of the mode that ran before it
+    {0x3018,0x00}, // WINMODE: all-pixel
+    {0x302C,0x30}, // HTRIMMING_START = 48
+    {0x302D,0x00},
+    {0x302E,0x38}, // HNUM = 2616
+    {0x302F,0x0A},
+    {0x3056,0xAC}, // Y_OUT_SIZE = 1964
+    {0x3057,0x07},
+    {0x3074,0xB0}, // AREA3_ST_ADR_1 = 176
+    {0x3075,0x00},
+    {0x3076,0x58}, // AREA3_WIDTH_1 = 3928
+    {0x3077,0x0F},
     {0x3000,0x00},
     {0x3002,0x00},
 };
@@ -511,6 +525,19 @@ const static I2C_ARRAY Sensor_init_table_2lane_5m30fps[] =
     {0x3794,0x7A},
     {0x3796,0xA1},
     {0x3A01,0x01},  //LANEMODE 0x03:4Lane  0x01:2Lane
+    // Readout window at its power-on values, written so a mode never
+    // inherits the window of the mode that ran before it
+    {0x3018,0x00}, // WINMODE: all-pixel
+    {0x302C,0x30}, // HTRIMMING_START = 48
+    {0x302D,0x00},
+    {0x302E,0x38}, // HNUM = 2616
+    {0x302F,0x0A},
+    {0x3056,0xAC}, // Y_OUT_SIZE = 1964
+    {0x3057,0x07},
+    {0x3074,0xB0}, // AREA3_ST_ADR_1 = 176
+    {0x3075,0x00},
+    {0x3076,0x58}, // AREA3_WIDTH_1 = 3928
+    {0x3077,0x0F},
     {0x3000,0x00},
     {0x3002,0x00},
 };
@@ -634,6 +661,19 @@ const static I2C_ARRAY Sensor_init_table_4lane_5m25fps[] =
     //{0x3A27,0x00},  //THSEXIT
     //{0x3A28,0x2F},  //TLPX
     //{0x3A29,0x00},  //TLPX
+    // Readout window at its power-on values, written so a mode never
+    // inherits the window of the mode that ran before it
+    {0x3018,0x00}, // WINMODE: all-pixel
+    {0x302C,0x30}, // HTRIMMING_START = 48
+    {0x302D,0x00},
+    {0x302E,0x38}, // HNUM = 2616
+    {0x302F,0x0A},
+    {0x3056,0xAC}, // Y_OUT_SIZE = 1964
+    {0x3057,0x07},
+    {0x3074,0xB0}, // AREA3_ST_ADR_1 = 176
+    {0x3075,0x00},
+    {0x3076,0x58}, // AREA3_WIDTH_1 = 3928
+    {0x3077,0x0F},
     {0x3000,0x00},
     {0x3002,0x00},
 };
@@ -757,6 +797,19 @@ const static I2C_ARRAY Sensor_init_table_4lane_5m30fps[] =
     //{0x3A27,0x00},  //THSEXIT
     //{0x3A28,0x2F},  //TLPX
     //{0x3A29,0x00},  //TLPX
+    // Readout window at its power-on values, written so a mode never
+    // inherits the window of the mode that ran before it
+    {0x3018,0x00}, // WINMODE: all-pixel
+    {0x302C,0x30}, // HTRIMMING_START = 48
+    {0x302D,0x00},
+    {0x302E,0x38}, // HNUM = 2616
+    {0x302F,0x0A},
+    {0x3056,0xAC}, // Y_OUT_SIZE = 1964
+    {0x3057,0x07},
+    {0x3074,0xB0}, // AREA3_ST_ADR_1 = 176
+    {0x3075,0x00},
+    {0x3076,0x58}, // AREA3_WIDTH_1 = 3928
+    {0x3077,0x0F},
     {0x3000,0x00},
     {0x3002,0x00},
 };
@@ -946,6 +999,14 @@ const static I2C_ARRAY Sensor_init_table_4lane_5m60fps[] =
 													   
     { 0x3A28, 0x2F},
     
+    // Vertical window at its power-on values, written so a mode never
+    // inherits the window of the mode that ran before it
+    {0x3056,0xAC}, // Y_OUT_SIZE = 1964
+    {0x3057,0x07},
+    {0x3074,0xB0}, // AREA3_ST_ADR_1 = 176
+    {0x3075,0x00},
+    {0x3076,0x58}, // AREA3_WIDTH_1 = 3928
+    {0x3077,0x0F},
     { 0x3000, 0x00}, // Standby Cancel
     
     { 0x3002, 0x00},
@@ -1228,6 +1289,14 @@ const static I2C_ARRAY Sensor_init_table_4lane_5m60fps_1920[] =
     {0x4074,0x00},
 
     /* Leave standby and start master-mode streaming. */
+    // Vertical window at its power-on values, written so a mode never
+    // inherits the window of the mode that ran before it
+    {0x3056,0xAC}, // Y_OUT_SIZE = 1964
+    {0x3057,0x07},
+    {0x3074,0xB0}, // AREA3_ST_ADR_1 = 176
+    {0x3075,0x00},
+    {0x3076,0x58}, // AREA3_WIDTH_1 = 3928
+    {0x3077,0x0F},
     {0x3000,0x00}, // STANDBY: operating
     {0x3002,0x00}, // XMSTA: master mode start
 };
@@ -1482,6 +1551,283 @@ const static I2C_ARRAY Sensor_init_table_4lane_90fps[] =
     {0x4028,0x00},
     {0x4029,0x00},
     {0x4074,0x00},
+    // Vertical window at its power-on values, written so a mode never
+    // inherits the window of the mode that ran before it
+    {0x3056,0xAC}, // Y_OUT_SIZE = 1964
+    {0x3057,0x07},
+    {0x3074,0xB0}, // AREA3_ST_ADR_1 = 176
+    {0x3075,0x00},
+    {0x3076,0x58}, // AREA3_WIDTH_1 = 3928
+    {0x3077,0x0F},
+    {0x3000,0x00},
+    {0x3002,0x00},
+};
+
+// 2560x1440@60, a centred 16:9 window: the 90 fps table's analog and
+// MIPI setup (1188 Mbps) with the window written in full. HMAX is 375
+// rather than that table's 275 because the line rate, not the frame rate,
+// is what the i6c ISP input runs out of: at 275 a 2584-pixel line arrives
+// in 7.4 us (~350 Mpixel/s while it lasts) and the ISP reports FIFO FULL
+// and passes no frames; at 375 (~256 Mpixel/s) it runs clean.
+const static I2C_ARRAY Sensor_init_table_4lane_1440p60[] =
+{
+    {0x3002,0x01},
+    {0xffff,0x14},
+    {0x3000,0x01},
+    {0xffff,0x14},
+    {0x3001,0x00},
+    {0x3003,0x00},
+    {0x3004,0x00},
+    {0x3008,0x00},
+    {0x3009,0x00},
+    {0x300A,0x00},
+    {0x300B,0x00},
+    {0x300C,0x42},
+    {0x300D,0x2E},
+    {0x3018,0x04},
+    {0x301C,0x08},
+    {0x3020,0x00},
+    {0x3021,0x00},
+    {0x3022,0x98},
+    {0x3024,0x38},
+    {0x3025,0x0A},
+    {0x3026,0x38},
+    {0x3028,0x38},
+    {0x3029,0x0A},
+    {0x302C,0x3C}, // HTRIMMING_START = 60 = 48 + 12N, centred on the 2592 array
+    {0x302D,0x00},
+    {0x302E,0x18}, // HNUM = 2584 = 2560 + 24 margin
+    {0x302F,0x0A},
+    {0x3030,0xE4}, // VMAX = 3300: 74.25 MHz / (3300 * HMAX 375) = 60.0 fps
+    {0x3031,0x0C},
+    {0x3032,0x00},
+    {0x3033,0x00},
+    {0x3034,0x77}, // HMAX = 375
+    {0x3035,0x01},
+    {0x3040,0xFF},
+    {0x3041,0xFF},
+    {0x3042,0x03},
+    {0x3043,0x00},
+    {0x3044,0x1E},
+    {0x3045,0x00},
+    {0x3046,0x70},
+    {0x3047,0x10},
+    {0x3050,0x00},
+    {0x3051,0x02},
+    {0x3052,0x00},
+    {0x3058,0x5C},
+    {0x3059,0x04},
+    {0x305A,0x00},
+    {0x3081,0x02},
+    {0x3090,0x00},
+    {0x3091,0x00},
+    {0x30C0,0x00},
+    {0x30C1,0x00},
+    {0x30C6,0x12},
+    {0x30CC,0x00},
+    {0x30CD,0x00},
+    {0x30CE,0x64},
+    {0x30D8,0xE0},
+    {0x30D9,0x0E},
+    {0x30DA,0x00},
+    {0x30E2,0x00},
+    {0x30E3,0x00},
+    {0x3115,0x00},
+    {0x3116,0x08},
+    {0x3118,0x00},
+    {0x3119,0x00},
+    {0x311A,0x00},
+    {0x311B,0x00},
+    {0x311E,0x01},
+    {0x314C,0xB0},
+    {0x314D,0x00},
+    {0x315A,0x02},
+    {0x3168,0x8F},
+    {0x316A,0x7E},
+    {0x319D,0x00},
+    {0x319E,0x01},
+    {0x31A1,0x00},
+    {0x31D7,0x00},
+    {0x3288,0x21},
+    {0x328A,0x02},
+    {0x32D4,0x01},
+    {0x32EC,0x00},
+    {0x3414,0x05},
+    {0x3416,0x18},
+    {0x341C,0xFF},
+    {0x341D,0x01},
+    {0x3452,0x19},
+    {0x3453,0x00},
+    {0x358A,0x77},
+    {0x35A1,0x01},
+    {0x3648,0x01},
+    {0x364A,0x04},
+    {0x364C,0x04},
+    {0x3678,0x01},
+    {0x367C,0x31},
+    {0x367E,0x31},
+    {0x36BC,0x00},
+    {0x36CC,0x00},
+    {0x36CD,0x00},
+    {0x36CE,0x00},
+    {0x36D0,0x00},
+    {0x36D1,0x00},
+    {0x36D2,0x00},
+    {0x36D4,0x00},
+    {0x36D6,0x00},
+    {0x36D7,0x00},
+    {0x36D8,0x00},
+    {0x36DA,0x00},
+    {0x36DB,0x00},
+    {0x3701,0x00},
+    {0x3706,0x10},
+    {0x3708,0x03},
+    {0x3714,0x02},
+    {0x3715,0x02},
+    {0x3716,0x01},
+    {0x3717,0x03},
+    {0x371C,0x3D},
+    {0x371D,0x3F},
+    {0x3724,0x03},
+    {0x3726,0x00},
+    {0x372C,0x00},
+    {0x372D,0x00},
+    {0x372E,0x46},
+    {0x372F,0x00},
+    {0x3730,0x89},
+    {0x3731,0x00},
+    {0x3732,0x08},
+    {0x3733,0x01},
+    {0x3734,0xFE},
+    {0x3735,0x05},
+    {0x3736,0x00},
+    {0x3740,0x02},
+    {0x3742,0x13},
+    {0x375D,0x00},
+    {0x375E,0x00},
+    {0x375F,0x11},
+    {0x3760,0x01},
+    {0x3768,0x1B},
+    {0x3769,0x1B},
+    {0x376A,0x1B},
+    {0x376B,0x1B},
+    {0x376C,0x1A},
+    {0x376D,0x17},
+    {0x376E,0x0F},
+    {0x3776,0x00},
+    {0x3777,0x00},
+    {0x3778,0x46},
+    {0x3779,0x00},
+    {0x377A,0x89},
+    {0x377B,0x00},
+    {0x377C,0x08},
+    {0x377D,0x01},
+    {0x377E,0x23},
+    {0x377F,0x02},
+    {0x3780,0xD9},
+    {0x3781,0x03},
+    {0x3782,0xF5},
+    {0x3783,0x06},
+    {0x3784,0xA5},
+    {0x3788,0x0F},
+    {0x378A,0xD9},
+    {0x378B,0x03},
+    {0x378C,0xEB},
+    {0x378D,0x05},
+    {0x378E,0x87},
+    {0x378F,0x06},
+    {0x3790,0xF5},
+    {0x3792,0x43},
+    {0x3794,0x7A},
+    {0x3796,0xA1},
+    {0x3862,0x00},
+    {0x38CC,0x00},
+    {0x38CD,0x00},
+    {0x395C,0x00},
+    {0x3A18,0x8F},
+    {0x3A1A,0x4F},
+    {0x3A1C,0x47},
+    {0x3A1E,0x37},
+    {0x3A1F,0x01},
+    {0x3A20,0x4F},
+    {0x3A22,0x87},
+    {0x3A24,0x4F},
+    {0x3A26,0x7F},
+    {0x3A28,0x3F},
+    {0x3A42,0x00},
+    {0x3A4C,0x00},
+    {0x3AE0,0x00},
+    {0x3AEC,0x00},
+    {0x3B00,0x00},
+    {0x3B06,0x00},
+    {0x3B98,0x00},
+    {0x3B99,0x00},
+    {0x3B9B,0x00},
+    {0x3B9C,0x00},
+    {0x3B9D,0x00},
+    {0x3B9E,0x00},
+    {0x3BA1,0x00},
+    {0x3BA2,0x00},
+    {0x3BA3,0x00},
+    {0x3BA4,0x00},
+    {0x3BA5,0x00},
+    {0x3BA6,0x00},
+    {0x3BA7,0x00},
+    {0x3BA8,0x00},
+    {0x3BA9,0x00},
+    {0x3BAC,0x00},
+    {0x3BAD,0x00},
+    {0x3BAE,0x00},
+    {0x3BAF,0x00},
+    {0x3BB0,0x00},
+    {0x3BB1,0x00},
+    {0x3BB2,0x00},
+    {0x3BB3,0x00},
+    {0x3BB4,0x00},
+    {0x3BB5,0x00},
+    {0x3BB6,0x00},
+    {0x3BB7,0x00},
+    {0x3BB8,0x00},
+    {0x3BBA,0x00},
+    {0x3BBC,0x00},
+    {0x3BBE,0x00},
+    {0x3BC0,0x00},
+    {0x3BC2,0x00},
+    {0x3BC4,0x00},
+    {0x3BC8,0x00},
+    {0x3BCA,0x00},
+    {0x4001,0x00},
+    {0x4004,0x00},
+    {0x4005,0x00},
+    {0x400C,0x00},
+    {0x4018,0x00},
+    {0x4019,0x00},
+    {0x401A,0x00},
+    {0x401B,0x00},
+    {0x401C,0x00},
+    {0x401D,0x00},
+    {0x401E,0x00},
+    {0x401F,0x00},
+    {0x4020,0x00},
+    {0x4021,0x00},
+    {0x4022,0x00},
+    {0x4023,0x00},
+    {0x4024,0x00},
+    {0x4025,0x00},
+    {0x4026,0x00},
+    {0x4027,0x00},
+    {0x4028,0x00},
+    {0x4029,0x00},
+    {0x4074,0x00},
+    // 1440 recorded lines, centred: the output carries 20 lines of
+    // margin and ignored OB rows, and AREA3 counts in half lines, so
+    // VMAX may go no lower than AREA3_WIDTH_1 + 96 = 3016
+    {0x3056,0xB4}, // Y_OUT_SIZE = 1460 = 1440 + 20
+    {0x3057,0x05},
+    {0x3074,0xA8}, // AREA3_ST_ADR_1 = 680 = 176 + (1944 - 1440)
+    {0x3075,0x02},
+    {0x3076,0x68}, // AREA3_WIDTH_1 = 2920 = 2 * 1460
+    {0x3077,0x0B},
     {0x3000,0x00},
     {0x3002,0x00},
 };
@@ -1736,6 +2082,14 @@ const static I2C_ARRAY Sensor_init_table_4lane_120fps[] =
     {0x4028,0x00},
     {0x4029,0x00},
     {0x4074,0x00},
+    // Vertical window at its power-on values, written so a mode never
+    // inherits the window of the mode that ran before it
+    {0x3056,0xAC}, // Y_OUT_SIZE = 1964
+    {0x3057,0x07},
+    {0x3074,0xB0}, // AREA3_ST_ADR_1 = 176
+    {0x3075,0x00},
+    {0x3076,0x58}, // AREA3_WIDTH_1 = 3928
+    {0x3077,0x0F},
     {0x3000,0x00},
     {0x3002,0x00},
 };
@@ -3392,6 +3746,34 @@ static int pCus_init_mipi4lane_90fps_linear(ms_cus_sensor *handle)
     return SUCCESS;
 }
 
+static int pCus_init_mipi4lane_1440p60_linear(ms_cus_sensor *handle)
+{
+    int i,cnt=0;
+
+    SENSOR_DMSG("\n[%s]", __FUNCTION__);
+
+    for(i=0;i< ARRAY_SIZE(Sensor_init_table_4lane_1440p60);i++)
+    {
+        if(Sensor_init_table_4lane_1440p60[i].reg==0xffff)
+        {
+            SENSOR_MSLEEP(Sensor_init_table_4lane_1440p60[i].data);
+        }
+        else
+        {
+            cnt = 0;
+            while(SensorReg_Write(Sensor_init_table_4lane_1440p60[i].reg,Sensor_init_table_4lane_1440p60[i].data) != SUCCESS)
+            {
+                cnt++;
+                if(cnt>=10)
+                {
+                    return FAIL;
+                }
+            }
+        }
+    }
+    return SUCCESS;
+}
+
 static int pCus_init_mipi4lane_120fps_linear(ms_cus_sensor *handle)
 {
     int i,cnt=0;
@@ -3753,6 +4135,31 @@ static int pCus_SetVideoRes(ms_cus_sensor *handle, u32 res_idx)
             params->tVts_reg[2].data = (vts_30fps >> 0)  & 0xFF;
 
             break;
+        case 6:
+            handle->video_res_supported.ulcur_res = 6;
+            if(lane_num == 2){
+                handle->pCus_sensor_init = pCus_init_mipi2lane_5m30fps_linear;
+                selected_init = "pCus_init_mipi2lane_5m30fps_linear";
+            }
+            else if (lane_num == 4){
+                handle->pCus_sensor_init = pCus_init_mipi4lane_1440p60_linear;
+                selected_init = "pCus_init_mipi4lane_1440p60_linear";
+            }
+            else{
+                handle->pCus_sensor_init = pCus_init_mipi4lane_1440p60_linear;
+                selected_init = "pCus_init_mipi4lane_1440p60_linear";
+                invalid_lane_num = 1;
+            }
+
+            vts_30fps  = 3300; // 0x3031:0x3030 = 0x0CE4
+            Preview_MAX_FPS = 60;
+            Preview_line_period = 5051; // HMAX 375 / 74.25 MHz
+
+            params->tVts_reg[0].data = (vts_30fps >> 16) & 0x0F;
+            params->tVts_reg[1].data = (vts_30fps >> 8)  & 0xFF;
+            params->tVts_reg[2].data = (vts_30fps >> 0)  & 0xFF;
+
+            break;
         default:
             break;
     }
@@ -3922,7 +4329,6 @@ static int pCus_GetFPS(ms_cus_sensor *handle)
 
 static int pCus_SetFPS(ms_cus_sensor *handle, u32 fps)
 {
-    u32 vts = 0;
     imx335_params *params = (imx335_params *)handle->private_data;
     u32 max_fps = handle->video_res_supported.res[handle->video_res_supported.ulcur_res].max_fps;
     u32 min_fps = handle->video_res_supported.res[handle->video_res_supported.ulcur_res].min_fps;
@@ -3942,12 +4348,9 @@ static int pCus_SetFPS(ms_cus_sensor *handle, u32 fps)
         return FAIL;
     }
 
-    if(params->expo.expo_lines > params->expo.vts -2){
-        vts = params->expo.expo_lines + 8;
-    }else{
-        vts = params->expo.vts;
-    }
-    params->expo.vts = vts;
+    // expo.vts is the rate's own frame length and must stay that:
+    // pCus_SetAEUSecs stretches the frame for each exposure that needs it,
+    // and a stretch stored here would outlive the exposure that asked for it.
     pCus_SetAEUSecs(handle, params->expo.expo_lef_us);
 
     params->dirty = true;
