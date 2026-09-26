@@ -4006,7 +4006,6 @@ static int pCus_GetFPS(ms_cus_sensor *handle)
 
 static int pCus_SetFPS(ms_cus_sensor *handle, u32 fps)
 {
-    u32 vts = 0;
     imx335_params *params = (imx335_params *)handle->private_data;
     u32 max_fps = handle->video_res_supported.res[handle->video_res_supported.ulcur_res].max_fps;
     u32 min_fps = handle->video_res_supported.res[handle->video_res_supported.ulcur_res].min_fps;
@@ -4026,12 +4025,9 @@ static int pCus_SetFPS(ms_cus_sensor *handle, u32 fps)
         return FAIL;
     }
 
-    if(params->expo.expo_lines > params->expo.vts -2){
-        vts = params->expo.expo_lines + 8;
-    }else{
-        vts = params->expo.vts;
-    }
-    params->expo.vts = vts;
+    // expo.vts is the rate's own frame length and must stay that:
+    // pCus_SetAEUSecs stretches the frame for each exposure that needs it,
+    // and a stretch stored here would outlive the exposure that asked for it.
     pCus_SetAEUSecs(handle, params->expo.expo_lef_us);
 
     params->dirty = true;
