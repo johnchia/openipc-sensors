@@ -404,6 +404,19 @@ const static I2C_ARRAY Sensor_init_table_2lane_5m25fps[] =
     {0x3794,0x7A},
     {0x3796,0xA1},
     {0x3A01,0x01},  //LANEMODE 0x03:4Lane  0x01:2Lane
+    // Readout window at its power-on values, written so a mode never
+    // inherits the window of the mode that ran before it
+    {0x3018,0x00}, // WINMODE: all-pixel
+    {0x302C,0x30}, // HTRIMMING_START = 48
+    {0x302D,0x00},
+    {0x302E,0x38}, // HNUM = 2616
+    {0x302F,0x0A},
+    {0x3056,0xAC}, // Y_OUT_SIZE = 1964
+    {0x3057,0x07},
+    {0x3074,0xB0}, // AREA3_ST_ADR_1 = 176
+    {0x3075,0x00},
+    {0x3076,0x58}, // AREA3_WIDTH_1 = 3928
+    {0x3077,0x0F},
     {0x3000,0x00},
     {0x3002,0x00},
 };
@@ -511,6 +524,19 @@ const static I2C_ARRAY Sensor_init_table_2lane_5m30fps[] =
     {0x3794,0x7A},
     {0x3796,0xA1},
     {0x3A01,0x01},  //LANEMODE 0x03:4Lane  0x01:2Lane
+    // Readout window at its power-on values, written so a mode never
+    // inherits the window of the mode that ran before it
+    {0x3018,0x00}, // WINMODE: all-pixel
+    {0x302C,0x30}, // HTRIMMING_START = 48
+    {0x302D,0x00},
+    {0x302E,0x38}, // HNUM = 2616
+    {0x302F,0x0A},
+    {0x3056,0xAC}, // Y_OUT_SIZE = 1964
+    {0x3057,0x07},
+    {0x3074,0xB0}, // AREA3_ST_ADR_1 = 176
+    {0x3075,0x00},
+    {0x3076,0x58}, // AREA3_WIDTH_1 = 3928
+    {0x3077,0x0F},
     {0x3000,0x00},
     {0x3002,0x00},
 };
@@ -634,6 +660,19 @@ const static I2C_ARRAY Sensor_init_table_4lane_5m25fps[] =
     //{0x3A27,0x00},  //THSEXIT
     //{0x3A28,0x2F},  //TLPX
     //{0x3A29,0x00},  //TLPX
+    // Readout window at its power-on values, written so a mode never
+    // inherits the window of the mode that ran before it
+    {0x3018,0x00}, // WINMODE: all-pixel
+    {0x302C,0x30}, // HTRIMMING_START = 48
+    {0x302D,0x00},
+    {0x302E,0x38}, // HNUM = 2616
+    {0x302F,0x0A},
+    {0x3056,0xAC}, // Y_OUT_SIZE = 1964
+    {0x3057,0x07},
+    {0x3074,0xB0}, // AREA3_ST_ADR_1 = 176
+    {0x3075,0x00},
+    {0x3076,0x58}, // AREA3_WIDTH_1 = 3928
+    {0x3077,0x0F},
     {0x3000,0x00},
     {0x3002,0x00},
 };
@@ -757,6 +796,19 @@ const static I2C_ARRAY Sensor_init_table_4lane_5m30fps[] =
     //{0x3A27,0x00},  //THSEXIT
     //{0x3A28,0x2F},  //TLPX
     //{0x3A29,0x00},  //TLPX
+    // Readout window at its power-on values, written so a mode never
+    // inherits the window of the mode that ran before it
+    {0x3018,0x00}, // WINMODE: all-pixel
+    {0x302C,0x30}, // HTRIMMING_START = 48
+    {0x302D,0x00},
+    {0x302E,0x38}, // HNUM = 2616
+    {0x302F,0x0A},
+    {0x3056,0xAC}, // Y_OUT_SIZE = 1964
+    {0x3057,0x07},
+    {0x3074,0xB0}, // AREA3_ST_ADR_1 = 176
+    {0x3075,0x00},
+    {0x3076,0x58}, // AREA3_WIDTH_1 = 3928
+    {0x3077,0x0F},
     {0x3000,0x00},
     {0x3002,0x00},
 };
@@ -946,6 +998,14 @@ const static I2C_ARRAY Sensor_init_table_4lane_5m60fps[] =
 													   
     { 0x3A28, 0x2F},
     
+    // Vertical window at its power-on values, written so a mode never
+    // inherits the window of the mode that ran before it
+    {0x3056,0xAC}, // Y_OUT_SIZE = 1964
+    {0x3057,0x07},
+    {0x3074,0xB0}, // AREA3_ST_ADR_1 = 176
+    {0x3075,0x00},
+    {0x3076,0x58}, // AREA3_WIDTH_1 = 3928
+    {0x3077,0x0F},
     { 0x3000, 0x00}, // Standby Cancel
     
     { 0x3002, 0x00},
@@ -1228,6 +1288,14 @@ const static I2C_ARRAY Sensor_init_table_4lane_5m60fps_1920[] =
     {0x4074,0x00},
 
     /* Leave standby and start master-mode streaming. */
+    // Vertical window at its power-on values, written so a mode never
+    // inherits the window of the mode that ran before it
+    {0x3056,0xAC}, // Y_OUT_SIZE = 1964
+    {0x3057,0x07},
+    {0x3074,0xB0}, // AREA3_ST_ADR_1 = 176
+    {0x3075,0x00},
+    {0x3076,0x58}, // AREA3_WIDTH_1 = 3928
+    {0x3077,0x0F},
     {0x3000,0x00}, // STANDBY: operating
     {0x3002,0x00}, // XMSTA: master mode start
 };
@@ -1482,6 +1550,14 @@ const static I2C_ARRAY Sensor_init_table_4lane_90fps[] =
     {0x4028,0x00},
     {0x4029,0x00},
     {0x4074,0x00},
+    // Vertical window at its power-on values, written so a mode never
+    // inherits the window of the mode that ran before it
+    {0x3056,0xAC}, // Y_OUT_SIZE = 1964
+    {0x3057,0x07},
+    {0x3074,0xB0}, // AREA3_ST_ADR_1 = 176
+    {0x3075,0x00},
+    {0x3076,0x58}, // AREA3_WIDTH_1 = 3928
+    {0x3077,0x0F},
     {0x3000,0x00},
     {0x3002,0x00},
 };
@@ -1736,6 +1812,14 @@ const static I2C_ARRAY Sensor_init_table_4lane_120fps[] =
     {0x4028,0x00},
     {0x4029,0x00},
     {0x4074,0x00},
+    // Vertical window at its power-on values, written so a mode never
+    // inherits the window of the mode that ran before it
+    {0x3056,0xAC}, // Y_OUT_SIZE = 1964
+    {0x3057,0x07},
+    {0x3074,0xB0}, // AREA3_ST_ADR_1 = 176
+    {0x3075,0x00},
+    {0x3076,0x58}, // AREA3_WIDTH_1 = 3928
+    {0x3077,0x0F},
     {0x3000,0x00},
     {0x3002,0x00},
 };
